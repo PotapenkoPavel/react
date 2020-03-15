@@ -4,40 +4,44 @@ import { Api } from "../Api/api.js"
 class Search extends React.Component {
   constructor(props) {
     super(props)
+
     this.api = new Api()
+
     this.searchUsers = this.searchUsers.bind(this)
-    this.counter = ""
-    this.state = { counter: 0, showCounter: false }
   }
 
   searchUsers() {
-    let value = document.querySelector(".search-input").value
+    let value = document.querySelector(".search__input").value
+
     if (value.length > 0) {
       this.api.searchUsers(value, 1).then(res => {
-        this.props.getUsersList(res.items)
-        this.setState({ counter: res.total_count, showCounter: true })
+        this.props.loadUsers(
+          res.items,
+          res.total_count,
+          value,
+          true,
+          res.total_count > 20
+        )
       })
     } else {
-      this.props.getUsersList([], true)
-      this.setState({ counter: 0, showCounter: false })
+      this.props.loadUsers([], 0, "", false, false, false)
     }
   }
 
-  showCounter() {}
-
   render() {
-    this.counter = this.state.counter
-      ? `По вашему запросу найдено ${this.state.counter} пользователей`
+    let counterUsers = this.props.counter
+      ? `По вашему запросу найдено ${this.props.counter} пользователей`
       : `По вашему запросу ничего не найдено`
-    const span = <span className="counter">{this.counter}</span>
+    const span = <span className="search__counter">{counterUsers}</span>
+
     return (
       <div className="search">
         <input
-          className="search-input"
+          className="search__input"
           placeholder="Write user name..."
           onChange={debounce(this.searchUsers, 500)}
         ></input>
-        {this.state.showCounter ? span : null}
+        {this.props.showCounter ? span : null}
       </div>
     )
   }

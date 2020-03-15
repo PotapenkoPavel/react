@@ -7,6 +7,20 @@ export class Api {
       `${URL}/search/users?q=${value}&per_page=${USERS_PER_PAGE}&page=${currentPage}`
     ).then(res => res.json())
   }
+
+  searchUserData(user) {
+    const urls = [
+      `${URL}/users/${user}/followers`,
+      `${URL}/users/${user}/following`,
+      `${URL}/users/${user}/repos`
+    ]
+
+    const requests = urls.map(url => fetch(url))
+
+    return Promise.all(requests).then(responses => {
+      return Promise.all(responses.map(res => res.json()))
+    })
+  }
 }
 
 export default Api
