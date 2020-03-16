@@ -9,14 +9,17 @@ class App extends React.Component {
 
     this.api = new Api()
 
-    this.state = {
+    this.info = {
       usersList: [],
       total_count: 0,
-      currentPage: 1,
-      queryValue: "",
       showCounterUsers: false,
       showLoadMoreButton: false,
       showUserInformation: false
+    }
+
+    this.state = {
+      queryValue: "",
+      currentPage: 1
     }
 
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
@@ -24,28 +27,30 @@ class App extends React.Component {
   }
 
   handleSearchInputChange(
-    list,
-    usersAmout,
-    query,
-    showCounter,
-    showButton,
-    showInfo
+    list = [],
+    usersAmout = 0,
+    query = "",
+    showCounter = false,
+    showButton = false,
+    showInfo = false
   ) {
+    this.info.usersList = list
+    this.info.total_count = usersAmout
+    this.info.showCounterUsers = showCounter
+    this.info.showLoadMoreButton = showButton
+    this.info.showUserInformation = showInfo
+
     this.setState({
-      usersList: list,
-      total_count: usersAmout,
-      queryValue: query,
-      showCounterUsers: showCounter,
-      showLoadMoreButton: showButton,
-      showUserInformation: showInfo
+      queryValue: query
     })
   }
 
   handleLoadMoreButtonClick(list, page, showButton) {
+    this.info.usersList = list
+    this.info.showLoadMoreButton = showButton
+
     this.setState({
-      usersList: list,
-      currentPage: page,
-      showLoadMoreButton: showButton
+      currentPage: page
     })
   }
 
@@ -55,16 +60,16 @@ class App extends React.Component {
         <h1 className="title">Github Search Users</h1>
         <Search
           loadUsers={this.handleSearchInputChange}
-          counter={this.state.total_count}
-          showCounter={this.state.showCounterUsers}
+          counter={this.info.total_count}
+          showCounter={this.info.showCounterUsers}
         />
         <Main
-          users={this.state.usersList}
+          users={this.info.usersList}
           query={this.state.queryValue}
           page={this.state.currentPage}
-          showLoadMoreButton={this.state.showLoadMoreButton}
+          showLoadMoreButton={this.info.showLoadMoreButton}
           loadMoreUsers={this.handleLoadMoreButtonClick}
-          showUserInformation={this.state.showUserInformation}
+          showUserInfo={this.info.showUserInformation}
         />
       </div>
     )

@@ -65,9 +65,7 @@ class Main extends React.Component {
           />
         </div>
 
-        {[this.user, this.followers, this.following, this.repos].includes(
-          null
-        ) ? null : (
+        {this.props.showUserInfo && this.user ? (
           <div className="user__info">
             <UserAvatar user={this.user} />
             <UserFollowers
@@ -83,7 +81,7 @@ class Main extends React.Component {
               warn={Boolean(this.repos.length)}
             />
           </div>
-        )}
+        ) : null}
       </div>
     )
   }

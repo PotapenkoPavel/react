@@ -20,11 +20,12 @@ class Search extends React.Component {
           res.total_count,
           value,
           true,
-          res.total_count > 20
+          res.total_count > 20,
+          true
         )
       })
     } else {
-      this.props.loadUsers([], 0, "", false, false, false)
+      this.props.loadUsers()
     }
   }
 
