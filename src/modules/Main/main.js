@@ -25,8 +25,6 @@ class Main extends React.Component {
 
   searchUsersMore() {
     this.api.searchUsers(this.props.query, this.props.page + 1).then(res => {
-      console.log()
-
       this.props.loadMoreUsers(
         this.props.users.concat(res.items),
         this.props.page + 1,
@@ -44,8 +42,6 @@ class Main extends React.Component {
     await this.api.searchUserData(userName).then(res => {
       ;[this.followers, this.following, this.repos] = res
     })
-
-    console.log(this.followers, this.following, this.repos)
 
     this.setState({ currentUser: userName })
   }

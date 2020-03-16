@@ -2,7 +2,7 @@ import React from "react"
 
 function UserFollowing(props) {
   return props.warn ? (
-    <div className="user-info__block following">
+    <div className="user-info__block user-info__block_following">
       <h2 className="user-info__title">Following</h2>
       <ul className="user-info__list">
         {props.userFollowing.map(user => {

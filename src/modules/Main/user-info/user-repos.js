@@ -2,7 +2,7 @@ import React from "react"
 
 function UserRepos(props) {
   return props.warn ? (
-    <div className="user-info__block repositories">
+    <div className="user-info__block user-info__block_repositories">
       <h2 className="user-info__title">Repositories</h2>
       <ul className="user-info__list">
         {props.userRepos.map(repository => {
